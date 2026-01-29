@@ -1,0 +1,40 @@
+Today i changed my theme of linux lol uhh... not on my own but well its a accomplishment lets see what i learned and then i will
+additionally add what i forgot XD lets goooo
+1. pwd- heh sounds like a degree but well its fullform is print working directory.
+what is does? it shows where exactly are you and prints the path to you or the place you are in.
+
+2.cd- change directory hmmm... its full form is pretty self explanatory since i take it that directory in linux means
+a file/folders idk if im correct but yea lets go with it
+what it does? it helps us go to a folder ex:- cd folder_name
+
+3.mkdir- ah this one is easy too it just make a folder at the location where we are currently it stands for makedirectory i think
+letss see what else did i know and fumbled up now...
+
+4.nano- idk its full form so ummm it help us edit/write in the file lol im using nano to write it. First time:)
+
+5.touch- touch-grass... ye idk about this ones full form too but what it does?
+it just creates a new file where we specify or where we are right now
+
+6.ls- heee this one stands for list hmm wont it be good if it was li? well whatever.
+what it does? it print the files that we have inside a directory hmm like opening a door to see what criminals are inside.
+
+ohh how could i forget my favourite question .... whoami .... lol 
+it prints my user name like i didnt know it to begin with why does this command even exist maybe i will know i future but 
+lets see
+
+
+Thats all i understand till now lets continue this if i learn something new or info about them today or 
+on day 2-- 11.24AM lets see if i comeback.
+
+Im back again 
+
+Now what did i learn?
+
+1.cp - this does the job of copying and pasting of folders/files atleast thats what i used it to do right now...
+i will know soon if im correct.
+
+lol i figured out how to open vs code via CLI amazing XD lets get to work now.
+
+// i learned that i can just jump to files by just doing cd /pathToFile/ lol so easy haha.
+
+
