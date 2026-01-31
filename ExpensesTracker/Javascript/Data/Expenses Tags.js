@@ -1,0 +1,20 @@
+export const expenseTags = [
+  "Worth it",
+  "Regret buy",
+  "Impulse",
+  "Overpriced",
+  "Great deal",
+  "Never again",
+  "Essential",
+  "Convenience",
+  "Treat myself",
+  "Social pressure",
+  "Upgrade",
+  "Emergency",
+  "Budgeted",
+  "Unplanned",
+  "Splurge",
+  "Investment",
+  "Waste",
+  "Would buy again"
+];
