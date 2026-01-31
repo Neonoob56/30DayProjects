@@ -1,12 +1,14 @@
 import { category } from "./Data/Category.js";
 import { expenses } from "./Data/Expenses.js";
 import { expenseTags } from "./Data/Expenses Tags.js";
+import { saveToStorage } from "./utility.js";
 import "https://cdn.jsdelivr.net/npm/dayjs@1.11.19/dayjs.min.js";
 
 const tagsList = []
 function renderAddingExpenses() {
     const expenses_details = document.querySelector('.add-expenses-details');
-    expenses_details.innerHTML = ` <div class="expense">
+    expenses_details.innerHTML = `<span class="err-message"></span>
+        <div class="expense">
             <input type="number"name="Amount-input" placeholder="Enter: Amount you spent"class="inputs" data-type="amount-input">
             <label for="category-selector">Category: </label> 
             <select name="category-selector" class="inputs js-category-selector"data-type="category-input">   
@@ -31,7 +33,6 @@ function renderAddingExpenses() {
                     <div class="added-tags">
                         Tags: []
                         </div>
-                    <span class="tags-message"></span>
                     <div class="add-tags-list"></div>
                 </div>
                 <div class="comment">
@@ -86,7 +87,7 @@ function addTagsEventListeners() {
             addToTagList(button.innerText);
         })
     })
-}
+};
 
 function addToTagList(tag) {
     const tagsFullMessage = document.querySelector('.tags-message');
@@ -105,7 +106,7 @@ function addToTagList(tag) {
         renderTags();
     }
     else {
-        tagsFullMessage.innerText = 'Cannot Add More Than 4 Tags'
+        showErrorMessage('Cannot Add More Than 4 Tags');
     }
 };
 
@@ -120,43 +121,67 @@ function deleteTagList(tag) {
 
 function getValuesOfInput() {
     const inputs = document.querySelectorAll('.inputs');
-    const result = {
-        id: crypto.randomUUID(),
-    }
-    inputs.forEach(input => {
-        let data = input.dataset.type;
-        if (data === 'amount-input') {
-            result.amount = input.value;
+    const result = {}
+    for (let i = 0; i < inputs.length; i++) {
+        if (!inputs[i].value) {
+            showErrorMessage('Ensure all the necessary feilds have been filled');
+            return;
         }
-        else if (data === 'category-input') {
-            result.category = input.value;
-        }
-        else if (data === 'timeanddate-input') {
-            if(input.checked){
-                result.date = dayjs().format('DD MM YYYY');
-                result.time = dayjs().format('HH:mm');
+        else {
+            let data = inputs[i].dataset.type;
+            result.id = crypto.randomUUID();
+            if (data === 'amount-input') {
+                if (inputs[i].value && isFinite(inputs[i].value)) {
+                    result.amount = Number(inputs[i].value);
+                } else {
+                    showErrorMessage('Something is Wrong with this Amount');
+                    return;
+                }
             }
-            else{
-                const date = document.querySelector('.inp-date').value;
-                const time = document.querySelector('.inp-time').value;
-                result.date = dayjs(date).format('DD MM YYYY');
-                result.time = time;
+            else if (data === 'category-input') {
+                result.category = inputs[i].value;
             }
+            else if (data === 'timeanddate-input') {
+                if (inputs[i].checked) {
+                    result.date = dayjs().format('DD MM YYYY');
+                    result.time = dayjs().format('HH:mm');
+                }
+                else {
+                    const date = document.querySelector('.inp-date').value;
+                    const time = document.querySelector('.inp-time').value;
+                    if (!date && !time) {
+                        showErrorMessage('Please enter Date And Time to continue')
+                        return;
+                    } else {
+                        result.date = dayjs(date).format('DD MM YYYY');
+                        result.time = time;
+                    }
+                }
+            }
+            else if (data === 'paymentmode-input') {
+                result.paymentMode = inputs[i].value;
+            }
+            else if (data === 'comment-input') {
+                result.comment = inputs[i].value;
+            };
         }
-        else if(data==='paymentmode-input'){
-            result.paymentMode = input.value;
-        }
-        else if(data==='comment-input'){
-            result.comment = input.value;
-        };
-        result.tags=tagsList;
-    });
-    console.log(result);
-    
 
+    }
+    expenses.push(result);
+    saveToStorage('addedExpenses',expenses)
+    console.log(expenses);
+    
 }
 
 const addButton = document.querySelector('.add-expense');
 addButton.addEventListener('click', () => {
     getValuesOfInput();
 })
+
+function showErrorMessage(errorMessage) {
+    const errorBox = document.querySelector('.err-message');
+    errorBox.innerText = errorMessage;
+    setTimeout(() => {
+        errorBox.innerHTML = ''
+    }, 2000);
+}
